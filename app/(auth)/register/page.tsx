@@ -8,6 +8,8 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
+import { PasswordStrength } from "@/components/ui/password-strength";
 import {
   Card,
   CardContent,
@@ -140,9 +142,8 @@ export default function RegisterPage() {
           {/* Password */}
           <div className="space-y-1.5">
             <Label htmlFor="password">Mot de passe</Label>
-            <Input
+            <PasswordInput
               id="password"
-              type="password"
               autoComplete="new-password"
               placeholder="Minimum 8 caractères"
               value={password}
@@ -150,6 +151,7 @@ export default function RegisterPage() {
               aria-invalid={!!errors.password}
               aria-describedby={errors.password ? "password-error" : undefined}
             />
+            <PasswordStrength password={password} />
             {errors.password && (
               <p id="password-error" className="text-xs text-error">
                 {errors.password}
@@ -160,9 +162,8 @@ export default function RegisterPage() {
           {/* Confirm password */}
           <div className="space-y-1.5">
             <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
-            <Input
+            <PasswordInput
               id="confirmPassword"
-              type="password"
               autoComplete="new-password"
               placeholder="••••••••"
               value={confirmPassword}
