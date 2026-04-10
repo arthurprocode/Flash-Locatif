@@ -53,36 +53,17 @@ const jsonLd = {
 };
 
 /* ─────────────────────────────────────────────
-   SVG icons (inline for zero-bundle overhead)
+   Icons
 ───────────────────────────────────────────── */
-const ClockIcon = () => (
-  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+const CheckIcon = () => (
+  <svg className="h-5 w-5 shrink-0 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
   </svg>
 );
-const DocumentIcon = () => (
-  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-  </svg>
-);
-const EuroIcon = () => (
-  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-const BoltIcon = () => (
-  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-  </svg>
-);
-const CheckCircleIcon = () => (
-  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-const PdfIcon = () => (
-  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} aria-hidden="true">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+
+const ArrowRightIcon = () => (
+  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
   </svg>
 );
 
@@ -91,17 +72,17 @@ const PdfIcon = () => (
 ───────────────────────────────────────────── */
 const PAIN_POINTS = [
   {
-    icon: <ClockIcon />,
+    number: "01",
     title: "Des heures perdues chaque année",
     body: "Retrouver les relevés, comparer les régimes, remplir le formulaire 2044… sans filet de sécurité.",
   },
   {
-    icon: <DocumentIcon />,
+    number: "02",
     title: "Un formulaire incompréhensible",
     body: "Le formulaire 2044 compte 4 pages et une notice de 20 pages. Une case mal remplie coûte cher.",
   },
   {
-    icon: <EuroIcon />,
+    number: "03",
     title: "Un régime fiscal mal choisi",
     body: "Micro-foncier ou régime réel ? Un mauvais choix peut vous coûter plusieurs centaines d'euros par an.",
   },
@@ -109,19 +90,20 @@ const PAIN_POINTS = [
 
 const BENEFITS = [
   {
-    icon: <BoltIcon />,
     title: "10 minutes chrono",
     body: "Répondez à nos questions guidées, Flash Locatif fait le calcul et génère votre formulaire à votre place.",
   },
   {
-    icon: <CheckCircleIcon />,
     title: "Régime optimal garanti",
     body: "Notre moteur compare micro-foncier et régime réel et vous montre exactement combien vous économisez.",
   },
   {
-    icon: <PdfIcon />,
     title: "PDF 2044 pré-rempli",
     body: "Téléchargez votre formulaire prêt à reporter sur impots.gouv.fr, accompagné d'un guide pas à pas.",
+  },
+  {
+    title: "Déficit foncier géré",
+    body: "Calcul automatique du déficit imputable sur votre revenu global (jusqu'à 10 750 €) et du report sur 10 ans.",
   },
 ];
 
@@ -129,17 +111,17 @@ const HOW_IT_WORKS = [
   {
     step: "01",
     title: "Saisissez vos données",
-    body: "Revenus locatifs, charges déductibles, intérêts d'emprunt, taxe foncière… Notre formulaire vous guide.",
+    body: "Revenus locatifs, charges déductibles, intérêts d'emprunt, taxe foncière… Notre formulaire guidé vous accompagne bien à bien.",
   },
   {
     step: "02",
     title: "Visualisez la simulation",
-    body: "Flash Locatif compare les deux régimes et vous recommande celui qui minimise votre impôt foncier.",
+    body: "Flash Locatif compare micro-foncier et régime réel en temps réel et vous recommande le régime qui minimise votre impôt.",
   },
   {
     step: "03",
     title: "Téléchargez vos documents",
-    body: "Recevez votre formulaire 2044 pré-rempli et le guide pour le reporter sur impots.gouv.fr.",
+    body: "Recevez votre formulaire 2044 pré-rempli et le guide étape par étape pour le reporter sur impots.gouv.fr.",
   },
 ];
 
@@ -223,13 +205,13 @@ const FAQS = [
 ];
 
 /* ─────────────────────────────────────────────
-   Section label component
+   Section label — plain text, no pill
 ───────────────────────────────────────────── */
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-block rounded-full bg-brand-100 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-brand-700">
+    <p className="text-sm font-semibold uppercase tracking-widest text-brand-600">
       {children}
-    </span>
+    </p>
   );
 }
 
@@ -246,22 +228,14 @@ export default function HomePage() {
 
       {/* ══════════════════════════════════════
           HERO
+          — centered, max-w-4xl, px-6
       ══════════════════════════════════════ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white pt-20 pb-24 sm:pt-28 sm:pb-32">
-        {/* Subtle background grid */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#1E5FA8 1px, transparent 1px), linear-gradient(to right, #1E5FA8 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
+      <section className="bg-gradient-to-b from-brand-50 to-white py-20">
+        <div className="mx-auto max-w-4xl px-6 text-center">
 
-        <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
           {/* Badge */}
           <div className="flex justify-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-medium text-brand-700 shadow-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-brand-100 bg-white px-4 py-1.5 text-sm font-medium text-brand-700 shadow-sm">
               <span className="h-2 w-2 rounded-full bg-green-500" />
               Déclaration 2025 disponible
             </span>
@@ -274,15 +248,15 @@ export default function HomePage() {
             <span className="text-brand-600">en 10 minutes chrono</span>
           </h1>
 
-          {/* Sub-headline */}
+          {/* Sub-headline — mt-6 after headline */}
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-500 sm:text-xl">
             Flash Locatif calcule votre régime fiscal optimal, génère votre
             formulaire 2044 pré-rempli et vous guide pas à pas sur
             impots.gouv.fr. Fini les tableurs, fini les erreurs.
           </p>
 
-          {/* CTAs */}
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          {/* CTAs — mt-8 after subtitle */}
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/register">
               <Button
                 size="lg"
@@ -302,15 +276,19 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p className="mt-5 text-sm text-gray-400">
+          {/* Tagline — mt-4 after CTAs */}
+          <p className="mt-4 text-sm text-gray-400">
             Simulation gratuite · Paiement uniquement au téléchargement
           </p>
 
-          {/* Stats bar */}
-          <div className="mx-auto mt-14 grid max-w-2xl grid-cols-3 divide-x divide-gray-200 rounded-2xl border border-gray-200 bg-white shadow-sm">
+          {/* Stats bar — mt-12 above, py-6 inside each item */}
+          <div className="mx-auto mt-12 grid max-w-2xl grid-cols-3 divide-x divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
             {STATS.map((stat) => (
-              <div key={stat.label} className="flex flex-col items-center px-4 py-5">
-                <span className="text-2xl font-extrabold text-brand-600 sm:text-3xl">
+              <div key={stat.label} className="flex flex-col items-center px-4 py-6">
+                <span
+                  className="text-2xl font-extrabold text-brand-600 sm:text-3xl"
+                  style={{ fontVariantNumeric: "tabular-nums" }}
+                >
                   {stat.value}
                 </span>
                 <span className="mt-1 text-center text-xs font-medium text-gray-500">
@@ -324,36 +302,40 @@ export default function HomePage() {
 
       {/* ══════════════════════════════════════
           PROBLEM
+          — numbered rows, no identical cards
       ══════════════════════════════════════ */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          {/* Header */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-6">
+
+          {/* Header — centered, max-w-2xl */}
           <div className="mx-auto max-w-2xl text-center">
             <SectionLabel>Le problème</SectionLabel>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {/* mb-4 after label */}
+            <h2 className="mb-4 mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               La déclaration foncière,{" "}
-              <span className="text-red-600">c&apos;est un calvaire</span>
+              <span className="text-brand-600">c&apos;est un calvaire</span>
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-gray-500">
+            {/* mb-6 after title */}
+            <p className="mb-6 text-base leading-relaxed text-gray-500">
               Chaque année, des milliers de propriétaires bailleurs passent des
               heures sur leur déclaration — et font encore des erreurs.
             </p>
           </div>
 
-          {/* Cards */}
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {/* Pain points — numbered divider layout, no card boxes */}
+          {/* mb-12 before content */}
+          <div className="mb-12 mt-0 grid grid-cols-1 divide-y divide-gray-100 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {PAIN_POINTS.map((point) => (
-              <div
-                key={point.title}
-                className="rounded-2xl border border-red-100 bg-red-50 p-6"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-red-100 text-red-500">
-                  {point.icon}
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-gray-900">
+              <div key={point.number} className="p-6">
+                <span className="block text-5xl font-extrabold leading-none text-gray-100">
+                  {point.number}
+                </span>
+                {/* mb-3 after number */}
+                <h3 className="mb-2 mt-3 text-base font-semibold text-gray-900">
                   {point.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                {/* mb-2 after title */}
+                <p className="text-sm leading-relaxed text-gray-500">
                   {point.body}
                 </p>
               </div>
@@ -364,75 +346,111 @@ export default function HomePage() {
 
       {/* ══════════════════════════════════════
           SOLUTION
+          — two-col feature layout
       ══════════════════════════════════════ */}
-      <section className="bg-brand-50 py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      {/* OKLCH tinted background: hint of brand blue in the neutral */}
+      <section className="py-20" style={{ backgroundColor: "oklch(97% 0.008 250)" }}>
+        <div className="mx-auto max-w-6xl px-6">
+
           {/* Header */}
           <div className="mx-auto max-w-2xl text-center">
             <SectionLabel>La solution</SectionLabel>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {/* mb-4 after label */}
+            <h2 className="mb-4 mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               Flash Locatif fait{" "}
               <span className="text-brand-600">tout ça pour vous</span>
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-gray-500">
-              Un outil pensé pour les propriétaires bailleurs non-comptables qui
-              veulent bien faire leur déclaration sans y passer la journée.
+            {/* mb-6 after title */}
+            <p className="mb-6 text-base leading-relaxed text-gray-500">
+              Pensé pour les propriétaires bailleurs non-comptables qui veulent
+              bien déclarer sans y passer la journée.
             </p>
           </div>
 
-          {/* Cards */}
-          <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {BENEFITS.map((benefit) => (
-              <div
-                key={benefit.title}
-                className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-gray-100"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-100 text-brand-600">
-                  {benefit.icon}
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-gray-900">
-                  {benefit.title}
+          {/* Features — 2-col grid: left wide card + right stacked items */}
+          {/* mb-12 before content */}
+          <div className="mb-12 mt-0 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            {/* Large feature card */}
+            <div className="flex flex-col justify-between rounded-2xl bg-brand-600 p-8 text-white">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-widest text-brand-200">
+                  Fonctionnalité clé
+                </p>
+                <h3 className="mt-3 text-2xl font-extrabold leading-snug">
+                  Calcul automatique du régime optimal
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
-                  {benefit.body}
+                <p className="mt-4 text-base leading-relaxed text-brand-100">
+                  Notre moteur fiscal compare micro-foncier et régime réel avec
+                  vos données réelles et vous montre en euros combien vous
+                  économisez. Zéro supposition.
                 </p>
               </div>
-            ))}
+              <Link href="/register" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-brand-100">
+                Essayer gratuitement <ArrowRightIcon />
+              </Link>
+            </div>
+
+            {/* Right column: stacked benefit items */}
+            <div className="flex flex-col gap-4">
+              {BENEFITS.map((b) => (
+                <div
+                  key={b.title}
+                  className="flex items-start gap-4 rounded-2xl bg-white p-6 shadow-sm"
+                >
+                  <CheckIcon />
+                  <div>
+                    {/* mb-3 after icon (handled via gap-4 on parent + mt-0) */}
+                    <h3 className="mb-2 text-sm font-semibold text-gray-900">
+                      {b.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed text-gray-500">
+                      {b.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════
           HOW IT WORKS
+          — large typographic step numbers
       ══════════════════════════════════════ */}
-      <section id="comment-ca-marche" className="bg-white py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <section id="comment-ca-marche" className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-6">
+
           {/* Header */}
           <div className="mx-auto max-w-2xl text-center">
             <SectionLabel>Comment ça marche</SectionLabel>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {/* mb-4 after label */}
+            <h2 className="mb-4 mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               Trois étapes, moins de 10 minutes
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-gray-500">
+            {/* mb-6 after title */}
+            <p className="mb-6 text-base leading-relaxed text-gray-500">
               Un formulaire 2044 prêt à l&apos;emploi au bout du tunnel.
             </p>
           </div>
 
-          {/* Steps */}
-          <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          {/* Steps — editorial: large decorative numbers */}
+          {/* mb-12 before content */}
+          <div className="mb-12 mt-0 grid grid-cols-1 gap-0 divide-y divide-gray-100 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {HOW_IT_WORKS.map((item) => (
-              <div key={item.step} className="relative text-center">
-                {/* Step number */}
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-600 shadow-md">
-                  <span className="text-lg font-extrabold text-white">
-                    {item.step}
-                  </span>
-                </div>
-                {/* Content */}
-                <h3 className="mt-5 text-base font-semibold text-gray-900">
+              <div key={item.step} className="p-6">
+                <span
+                  className="block select-none text-6xl font-extrabold leading-none"
+                  style={{ color: "oklch(92% 0.015 250)" }}
+                >
+                  {item.step}
+                </span>
+                {/* mb-3 after step number */}
+                <h3 className="mb-2 mt-3 text-base font-semibold text-gray-900">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-500">
+                {/* mb-2 after title */}
+                <p className="text-sm leading-relaxed text-gray-500">
                   {item.body}
                 </p>
               </div>
@@ -440,7 +458,7 @@ export default function HomePage() {
           </div>
 
           {/* CTA */}
-          <div className="mt-14 text-center">
+          <div className="text-center">
             <Link href="/register">
               <Button
                 size="lg"
@@ -456,28 +474,31 @@ export default function HomePage() {
       {/* ══════════════════════════════════════
           PRICING
       ══════════════════════════════════════ */}
-      <section id="tarifs" className="bg-gray-50 py-24">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <section id="tarifs" className="py-20" style={{ backgroundColor: "oklch(97% 0.005 250)" }}>
+        <div className="mx-auto max-w-6xl px-6">
+
           {/* Header */}
           <div className="mx-auto max-w-2xl text-center">
             <SectionLabel>Tarifs</SectionLabel>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {/* mb-4 after label */}
+            <h2 className="mb-4 mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               Des tarifs transparents
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-gray-500">
+            {/* mb-6 after title */}
+            <p className="mb-6 text-base leading-relaxed text-gray-500">
               Simulez gratuitement. Payez uniquement pour télécharger votre
               formulaire final.
             </p>
           </div>
 
-          {/* Cards */}
-          <div className="mt-14 grid grid-cols-1 items-start gap-6 sm:grid-cols-3">
+          {/* Pricing cards — mb-12 before */}
+          <div className="mb-12 mt-0 grid grid-cols-1 items-start gap-6 sm:grid-cols-3">
             {PLANS.map((plan) => (
               <PricingCard key={plan.name} {...plan} />
             ))}
           </div>
 
-          <p className="mt-8 text-center text-xs text-gray-400">
+          <p className="text-center text-xs text-gray-400">
             Tarifs HT — TVA 20 % applicable · Paiement unique par année fiscale
           </p>
         </div>
@@ -486,28 +507,37 @@ export default function HomePage() {
       {/* ══════════════════════════════════════
           FAQ
       ══════════════════════════════════════ */}
-      <section className="bg-white py-24">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6">
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-6xl px-6">
+
           {/* Header */}
-          <div className="text-center">
+          <div className="mx-auto max-w-2xl text-center">
             <SectionLabel>FAQ</SectionLabel>
-            <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+            {/* mb-4 after label */}
+            <h2 className="mb-4 mt-4 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
               Questions fréquentes
             </h2>
           </div>
 
-          <Accordion type="single" collapsible className="mt-12 w-full">
-            {FAQS.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="border-b border-gray-200">
-                <AccordionTrigger className="py-5 text-left text-sm font-semibold text-gray-900 hover:text-brand-600 hover:no-underline">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="pb-5 text-sm leading-relaxed text-gray-500">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          {/* Accordion — mb-12 before, max-w-2xl centered */}
+          <div className="mx-auto mb-12 mt-0 max-w-2xl">
+            <Accordion type="single" collapsible className="w-full">
+              {FAQS.map((faq, i) => (
+                <AccordionItem
+                  key={i}
+                  value={`faq-${i}`}
+                  className="border-b border-gray-200"
+                >
+                  <AccordionTrigger className="py-5 text-left text-sm font-semibold text-gray-900 hover:text-brand-600 hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-5 text-sm leading-relaxed text-gray-500">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
@@ -515,7 +545,7 @@ export default function HomePage() {
           FINAL CTA
       ══════════════════════════════════════ */}
       <section className="bg-brand-600 py-20">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
+        <div className="mx-auto max-w-6xl px-6 text-center">
           <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             Prêt à simplifier votre déclaration ?
           </h2>
