@@ -282,7 +282,7 @@ export default function HomePage() {
           </p>
 
           {/* Stats bar — mt-12 above, py-6 inside each item */}
-          <div className="mx-auto mt-12 grid max-w-2xl grid-cols-3 divide-x divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+          <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm sm:grid-cols-3 sm:divide-x sm:divide-y-0">
             {STATS.map((stat) => (
               <div key={stat.label} className="flex flex-col items-center px-4 py-6">
                 <span
