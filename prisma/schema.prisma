@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum DeclarationStatus {
+  DRAFT
+  COMPLETED
+  PAID
+}
+
+enum DocumentType {
+  FORM_2044
+  GUIDE
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model User {
+  id                 String        @id @default(cuid())
+  email              String        @unique
+  emailVerified      DateTime?
+  passwordHash       String
+  stripeCustomerId   String?       @unique
+  subscriptionStatus String?       // "active" | "canceled" | null
+  role               String        @default("user")
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  declarations       Declaration[]
+  passwordResetTokens PasswordResetToken[]
+}
+
+model Declaration {
+  id              String            @id @default(cuid())
+  userId          String
+  taxYear         Int
+  status          DeclarationStatus @default(DRAFT)
+  paidAt          DateTime?
+  stripeSessionId String?
+  planType        String?           // "solo" | "multi" | "pro"
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  properties       Property[]
+  previousDeficits PreviousDeficit[]
+  documents        Document[]
+
+  @@unique([userId, taxYear])
+}
+
+model Property {
+  id            String      @id @default(cuid())
+  declarationId String
+  name          String      // e.g. "Appartement Paris 11e"
+  order         Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  declaration   Declaration @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+  income        Income?
+  expenses      Expenses?
+}
+
+model Income {
+  id                   String   @id @default(cuid())
+  propertyId           String   @unique
+  grossRent            Float
+  rentChargesRecovered Float    @default(0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  property             Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}
+
+model Expenses {
+  id                     String   @id @default(cuid())
+  propertyId             String   @unique
+  mortgageInterest       Float    @default(0)
+  propertyManagementFees Float    @default(0)
+  landlordInsurance      Float    @default(0)
+  propertyTax            Float    @default(0)
+  maintenanceWorks       Float    @default(0)
+  condoFees              Float    @default(0)
+  accountingFees         Float    @default(0)
+  otherDeductible        Float    @default(0)
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  property               Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}
+
+model PreviousDeficit {
+  id              String      @id @default(cuid())
+  declarationId   String
+  year            Int
+  interestPortion Float       @default(0)
+  otherPortion    Float       @default(0)
+  createdAt       DateTime    @default(now())
+
+  declaration     Declaration @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+
+  @@unique([declarationId, year])
+}
+
+model Document {
+  id            String       @id @default(cuid())
+  declarationId String
+  type          DocumentType
+  url           String?
+  createdAt     DateTime     @default(now())
+
+  declaration   Declaration  @relation(fields: [declarationId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
